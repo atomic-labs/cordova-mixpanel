@@ -161,7 +161,7 @@
     <framework src="UIKit.framework" />
 
 
-    <preference name="icucore" value="true" />
+    <framework src="libicucore.dylib" value="true" />
 
   </platform> 
 </plugin>
