@@ -160,5 +160,8 @@
     <framework src="QuartzCore.framework" />
     <framework src="UIKit.framework" />
 
+
+    <preference name="icucore" value="true" />
+
   </platform> 
 </plugin>
