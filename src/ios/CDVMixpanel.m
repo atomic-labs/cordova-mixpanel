@@ -315,6 +315,15 @@
     [self successWithMessage:[NSString stringWithFormat:@"app badge count set to %d", badge]];
 }
 
+-(void)getTweakValue:(CDVInvokedUrlCommand *)command;
+{
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    NSString action = (NSString)[command.arguments objectAtIndex:0];
+    NSString default = (NSString)[command.arguments objectAtIndex:1];
+
+    [self successWithMessage:[NSString MPTweakValue(action, default)]];
+}
+
 // Private
 -(void)successWithCallbackId:(NSString *)theCallbackId;
 {
