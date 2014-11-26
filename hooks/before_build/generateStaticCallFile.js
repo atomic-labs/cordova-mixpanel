@@ -1,6 +1,8 @@
 var colors = require('colors');
 var esprima = require('esprima');
 var estraverse = require('estraverse');
+var path = require('path');
+var exec = require('child_process').exec;
 
 /**
  * @var {Object} console utils
@@ -26,14 +28,20 @@ module.exports = function(context) {
     var Q = context.requireCordovaModule('q');
     var deferral = new Q.defer();
 
-    setTimeout(function(){
-        console.log('hook.js>> end');
-        display.header('Generating Mixpanel A/B Test Statics');
-        display.success(require('path').dirname(require.main.filename));
-        display.success(__dirname);
-        console.log(context.opts);
+    var rootSource = path.resolve(context.opts.projectRoot, 'www')
+    
+    display.header('Generating Mixpanel A/B Test Statics');
+
+    var command = 'grep -Zlr "\<Mixpanel\>" ' + rootSource + ' | grep ".js"\'$\'';
+
+    console.info('running command: '.green + command)
+
+    exec(command, function (error, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        console.log(error);
         deferral.resolve();
-    }, 1000);
+    });
 
     return deferral.promise;
 };
