@@ -18,11 +18,14 @@
       </feature>
     </config-file>
 
-    <hook type="before_build" src="hooks/before_build/generateStaticCallFile.js" />
     <hook type="before_plugin_install" src="hooks/before_plugin_install/installNpmDependencies.sh" />
+    <hook type="before_build" src="hooks/before_build/generateStaticCallFile.js" />
 
     <header-file src="src/ios/CDVMixpanel.h" />
     <source-file src="src/ios/CDVMixpanel.m" />
+
+    <header-file src="src/ios/CDVMixpanelTweaks.h" />
+    <source-file src="src/ios/CDVMixpanelTweaks.m" />
 
     <header-file src="src/ios/AppDelegate+notification.h" />
     <source-file src="src/ios/AppDelegate+notification.m" />

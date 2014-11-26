@@ -6,7 +6,7 @@
 #import <Foundation/Foundation.h>
 #import <Cordova/CDV.h>
 #import "Mixpanel.h"
-#import "MPTweakInline.h"
+#import "CDVMixpanelTweaks.h"
 
 @interface CDVMixpanel: CDVPlugin
 {
