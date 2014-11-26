@@ -32,7 +32,7 @@ module.exports = function(context) {
     
     display.header('Generating Mixpanel A/B Test Statics');
 
-    var command = 'grep -Zlr "\<Mixpanel\>" ' + rootSource + ' | grep ".js"\'$\'';
+    var command = 'grep -Zlr "\\<Mixpanel\\>" ' + rootSource + ' | grep ".js"\'$\'';
 
     console.info('running command: '.green + command)
 
