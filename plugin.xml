@@ -11,8 +11,6 @@
   <js-module src="www/Mixpanel.js" name="Mixpanel">
     <clobbers target="Mixpanel" />
   </js-module>
-  <hook type="before_build" src="hooks/before_build/generateStaticCallFile.js" />
-  <hook type="before_plugin_install" src="hooks/before_plugin_install/installNpmDependencies.sh" />
   <platform name="ios">
     <config-file target="config.xml" parent="/*">
       <feature name="Mixpanel">
@@ -20,6 +18,8 @@
       </feature>
     </config-file>
 
+    <hook type="before_build" src="hooks/before_build/generateStaticCallFile.js" />
+    <hook type="before_plugin_install" src="hooks/before_plugin_install/installNpmDependencies.sh" />
 
     <header-file src="src/ios/CDVMixpanel.h" />
     <source-file src="src/ios/CDVMixpanel.m" />

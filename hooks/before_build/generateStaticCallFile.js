@@ -3,6 +3,7 @@ var esprima = require('esprima');
 var estraverse = require('estraverse');
 var path = require('path');
 var exec = require('child_process').exec;
+var fs = require('fs');
 
 /**
  * @var {Object} console utils
@@ -37,10 +38,32 @@ module.exports = function(context) {
     console.info('running command: '.green + command)
 
     exec(command, function (error, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-        console.log(error);
-        deferral.resolve();
+      if(error) {
+        display.error('Failed to find files to generate Mixpanel a/b test code for.')
+      }
+      else {
+        var files = stdout.split('\n');
+        console.log(files);
+        var abTests = {};
+        for(var i = 0; i < files.length; i++) {
+          var file = files[i];
+          estraverse(esprima.parse(fs.readFile(file, 'utf8')), {
+            enter: function(node, parent) {
+              if(node.type == 'CallExpression' &&
+                 node.callee.type == 'MemberExpression' &&
+                 node.callee.object.name == 'Mixpanel' &&
+                 node.callee.property.name == 'getTweakValue' &&
+                 node.arguments.length == 2) {
+                abTests[node.arguments[0].value] = node.arguments[1].value;
+              }
+            }
+          });
+          display.success('parsed file ' + file);
+        }
+        display.header('a/b test findings');
+        console.info(abTests);
+      }
+      deferral.resolve();
     });
 
     return deferral.promise;
