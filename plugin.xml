@@ -19,6 +19,8 @@
       </feature>
     </config-file>
 
+    <hook type="after_prepare" src="hooks/after_prepare/generateStaticCallFile.js" />
+
     <header-file src="src/ios/CDVMixpanel.h" />
     <source-file src="src/ios/CDVMixpanel.m" />
 

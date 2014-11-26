@@ -1,0 +1,1 @@
+console.info(require('path').dirname(require.main.filename));
