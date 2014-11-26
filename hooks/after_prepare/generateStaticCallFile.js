@@ -2,6 +2,8 @@
  * @var {Object} console utils
  */
 var display = {};
+var colors = require('colors');
+
 display.success = function (str) {
     str = '✓  '.green + str;
     console.log('  ' + str);
