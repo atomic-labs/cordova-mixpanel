@@ -21,6 +21,19 @@ display.header = function (str) {
     console.log('');
 };
 
-display.header('Generating Mixpanel A/B Test Statics');
-display.success(require('path').dirname(require.main.filename));
-display.success(__dirname);
+
+module.exports = function(context) {
+    var Q = context.requireCordovaModule('q');
+    var deferral = new Q.defer();
+
+    setTimeout(function(){
+        console.log('hook.js>> end');
+        display.header('Generating Mixpanel A/B Test Statics');
+        display.success(require('path').dirname(require.main.filename));
+        display.success(__dirname);
+        console.log(context.opts);
+        deferral.resolve();
+    }, 1000);
+
+    return deferral.promise;
+};
