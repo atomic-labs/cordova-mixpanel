@@ -1,8 +1,11 @@
+var colors = require('colors');
+var esprima = require('esprima');
+var estraverse = require('estraverse');
+
 /**
  * @var {Object} console utils
  */
 var display = {};
-var colors = require('colors');
 
 display.success = function (str) {
     str = '✓  '.green + str;
@@ -19,4 +22,5 @@ display.header = function (str) {
 };
 
 display.header('Generating Mixpanel A/B Test Statics');
-display.success(require('path').dirname(require.main.filename))
+display.success(require('path').dirname(require.main.filename));
+display.success(__dirname);
