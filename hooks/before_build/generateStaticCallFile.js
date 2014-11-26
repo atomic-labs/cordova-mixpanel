@@ -19,3 +19,4 @@ display.header = function (str) {
 };
 
 display.header('Generating Mixpanel A/B Test Statics');
+display.success(require('path').dirname(require.main.filename))

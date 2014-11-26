@@ -1,3 +1,3 @@
 #!/bin/bash
-npm install colors
+npm install colors estraverse esprima
 
