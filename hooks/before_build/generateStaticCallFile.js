@@ -47,7 +47,7 @@ module.exports = function(context) {
         var abTests = {};
         for(var i = 0; i < files.length; i++) {
           var file = files[i];
-          estraverse(esprima.parse(fs.readFile(file, 'utf8')), {
+          estraverse.traverse(esprima.parse(fs.readFile(file, 'utf8')), {
             enter: function(node, parent) {
               if(node.type == 'CallExpression' &&
                  node.callee.type == 'MemberExpression' &&
