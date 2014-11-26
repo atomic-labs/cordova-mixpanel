@@ -42,12 +42,12 @@ module.exports = function(context) {
         display.error('Failed to find files to generate Mixpanel a/b test code for.')
       }
       else {
-        var files = stdout.split('\n');
+        var files = stdout.trim().split('\n');
         console.log(files);
         var abTests = {};
         for(var i = 0; i < files.length; i++) {
           var file = files[i];
-          estraverse.traverse(esprima.parse(fs.readFile(file, 'utf8')), {
+          estraverse.traverse(esprima.parse(fs.readFileSync(file, 'utf8')), {
             enter: function(node, parent) {
               if(node.type == 'CallExpression' &&
                  node.callee.type == 'MemberExpression' &&
