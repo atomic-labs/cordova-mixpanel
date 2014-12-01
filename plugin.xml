@@ -165,6 +165,7 @@
     <framework src="QuartzCore.framework" />
     <framework src="UIKit.framework" />
     <framework src="CFNetwork.framework" />
+    <framework src="Security.framework" />
 
     <framework src="libicucore.dylib" value="true" />
 

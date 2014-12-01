@@ -317,11 +317,9 @@
 
 -(void)getTweakValue:(CDVInvokedUrlCommand *)command;
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    NSString action = (NSString)[command.arguments objectAtIndex:0];
-    NSString default = (NSString)[command.arguments objectAtIndex:1];
-
-    [self successWithMessage:[NSString MPTweakValue(action, default)]];
+    NSString *action = [command.arguments objectAtIndex:0];
+    MPTweak *tweak = [[MPTweakStore sharedInstance] tweakWithName:action];
+    [self successWithMessage:tweak.currentValue];
 }
 
 // Private

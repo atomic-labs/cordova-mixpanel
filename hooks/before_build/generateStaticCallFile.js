@@ -4,6 +4,7 @@ var estraverse = require('estraverse');
 var path = require('path');
 var exec = require('child_process').exec;
 var fs = require('fs');
+var _ = require('lodash');
 
 /**
  * @var {Object} console utils
@@ -29,9 +30,18 @@ module.exports = function(context) {
     var Q = context.requireCordovaModule('q');
     var deferral = new Q.defer();
 
-    var rootSource = path.resolve(context.opts.projectRoot, 'www')
+    var rootSource = path.resolve(context.opts.projectRoot, 'www');
+    var dirs = context.opts.projectRoot.split('/');
+    var projectName = dirs[dirs.length - 1];
+    var pluginClassPath = path.resolve(context.opts.projectRoot,
+                                       'platforms', 'ios', 'derpme',
+                                       'Plugins', 'org.poetic.mixpanel');
     
     display.header('Generating Mixpanel A/B Test Statics');
+
+    console.info(__dirname);
+    console.info(context);
+    console.info(pluginClassPath);
 
     var command = 'grep -Zlr "\\<Mixpanel\\>" ' + rootSource + ' | grep ".js"\'$\'';
 
@@ -62,6 +72,41 @@ module.exports = function(context) {
         }
         display.header('a/b test findings');
         console.info(abTests);
+      }
+      var keys = _.keys(abTests);
+      if(keys.length > 0){
+        var staticFilePath = path.resolve(pluginClassPath, 'CDVMixpanelTweaks.m');
+        var fileData = ['#import "CDVMixpanelTweaks.h"',
+                        '#import <Foundation/NSException.h>',
+                        '',
+                        '@implementation CDVMixpanelTweaks',
+                        '',
+                        '-(void)init:(CDVInvokedUrlCommand *)command;',
+                        '{',
+                        '    // BEGIN GENERATED'];
+
+
+        for(var i = 0; i < keys.length; i++) {
+          var key = keys[i];
+          var value = abTests[key];
+          if(_.isString(value)) {
+            value = '@"' + value + '"';
+          }
+          else if(value === true) {
+            value = 'YES';
+          }
+          else if(value === false) {
+            value = 'NO';
+          }
+          fileData.push('    MPTweakValue(@"' + key + '", ' + value + ');');
+        }
+        fileData.push('    // END GENERATED');
+        fileData.push('}');
+        fileData.push('@end');
+
+        fileData = fileData.join('\n') + '\n';
+
+        fs.writeFileSync(staticFilePath, fileData);
       }
       deferral.resolve();
     });

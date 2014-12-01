@@ -4,9 +4,9 @@
 
 @interface CDVMixpanelTweaks: CDVPlugin
 {
-    NSDictionary *notificationMessage;
-    BOOL    isInline;
-    NSString *notificationCallbackId;
-    
     BOOL ready;
 }
+
+-(void)init:(CDVInvokedUrlCommand *)command;
+
+@end

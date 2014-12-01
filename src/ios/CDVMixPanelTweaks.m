@@ -7,7 +7,9 @@
 
 -(void)init:(CDVInvokedUrlCommand *)command;
 {
-    # BEGIN INSERT
+    // BEGIN INSERT
 
-    # END INSERT
+    // END INSERT
 }
+
+@end
