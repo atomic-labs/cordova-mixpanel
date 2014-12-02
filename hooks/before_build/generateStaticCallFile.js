@@ -39,10 +39,6 @@ module.exports = function(context) {
     
     display.header('Generating Mixpanel A/B Test Statics');
 
-    console.info(__dirname);
-    console.info(context);
-    console.info(pluginClassPath);
-
     var command = 'grep -Zlr "\\<Mixpanel\\>" ' + rootSource + ' | grep ".js"\'$\'';
 
     console.info('running command: '.green + command)
@@ -53,7 +49,6 @@ module.exports = function(context) {
       }
       else {
         var files = stdout.trim().split('\n');
-        console.log(files);
         var abTests = {};
         for(var i = 0; i < files.length; i++) {
           var file = files[i];
@@ -71,7 +66,6 @@ module.exports = function(context) {
           display.success('parsed file ' + file);
         }
         display.header('a/b test findings');
-        console.info(abTests);
       }
       var keys = _.keys(abTests);
       if(keys.length > 0){
@@ -99,6 +93,7 @@ module.exports = function(context) {
             value = 'NO';
           }
           fileData.push('    MPTweakValue(@"' + key + '", ' + value + ');');
+          display.success('found tweak for "' + key + '": ' + value);
         }
         fileData.push('    // END GENERATED');
         fileData.push('}');
@@ -107,6 +102,9 @@ module.exports = function(context) {
         fileData = fileData.join('\n') + '\n';
 
         fs.writeFileSync(staticFilePath, fileData);
+      }
+      else {
+        display.success('found no tweaks');
       }
       deferral.resolve();
     });
