@@ -44,6 +44,7 @@
 -(void)setShowSurveyOnActive:(CDVInvokedUrlCommand *)command;
 -(void)showSurvey:(CDVInvokedUrlCommand *)command;
 -(void)showSurveyWithID:(CDVInvokedUrlCommand *)command;
+-(void)getTweakValue:(CDVInvokedUrlCommand *)command;
 
 @end
 

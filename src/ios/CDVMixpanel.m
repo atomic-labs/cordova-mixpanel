@@ -319,7 +319,8 @@
 {
     NSString *action = [command.arguments objectAtIndex:0];
     MPTweak *tweak = [[MPTweakStore sharedInstance] tweakWithName:action];
-    [self successWithMessage:tweak.currentValue];
+    MPTweakValue currentValue = tweak.currentValue ?: tweak.defaultValue;
+    [self successWithCallbackId: command.callbackId message:currentValue];
 }
 
 // Private
