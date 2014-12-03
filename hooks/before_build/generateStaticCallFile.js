@@ -58,7 +58,7 @@ module.exports = function(context) {
                  node.callee.type == 'MemberExpression' &&
                  node.callee.object.name == 'Mixpanel' &&
                  node.callee.property.name == 'getTweakValue' &&
-                 node.arguments.length == 2) {
+                 node.arguments.length >= 2) {
                 abTests[node.arguments[0].value] = node.arguments[1].value;
               }
             }
