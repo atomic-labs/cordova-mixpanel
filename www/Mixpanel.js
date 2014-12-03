@@ -78,8 +78,8 @@ Mixpanel.setApplicationIconBadgeNumber = function(badge, s, f) {
 };
 
 // Call this to get an a/b test value for action
-Mixpanel.getTweakValue = function(action, default, s, f) {
-  exec(s, f, "Mixpanel", "getTweakValue", [action, default]);
+Mixpanel.getTweakValue = function(action, defaultValue, s, f) {
+  exec(s, f, "Mixpanel", "getTweakValue", [action, defaultValue]);
 };
 
 module.exports = Mixpanel;
